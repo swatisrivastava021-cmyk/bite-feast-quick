@@ -13,7 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as AuthenticatedAddressesRouteImport } from './routes/_authenticated/addresses'
 import { Route as AuthenticatedCartRouteImport } from './routes/_authenticated/cart'
+import { Route as AuthenticatedCheckoutRouteImport } from './routes/_authenticated/checkout'
 import { Route as AuthenticatedRestaurantsIndexRouteImport } from './routes/_authenticated/restaurants.index'
 import { Route as AuthenticatedRestaurantsRestaurantIdRouteImport } from './routes/_authenticated/restaurants.$restaurantId'
 
@@ -36,9 +38,19 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAddressesRoute = AuthenticatedAddressesRouteImport.update({
+  id: '/addresses',
+  path: '/addresses',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCartRoute = AuthenticatedCartRouteImport.update({
   id: '/cart',
   path: '/cart',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCheckoutRoute = AuthenticatedCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedRestaurantsIndexRoute =
@@ -58,7 +70,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/addresses': typeof AuthenticatedAddressesRoute
   '/cart': typeof AuthenticatedCartRoute
+  '/checkout': typeof AuthenticatedCheckoutRoute
   '/restaurants/$restaurantId': typeof AuthenticatedRestaurantsRestaurantIdRoute
   '/restaurants/': typeof AuthenticatedRestaurantsIndexRoute
 }
@@ -66,7 +80,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/addresses': typeof AuthenticatedAddressesRoute
   '/cart': typeof AuthenticatedCartRoute
+  '/checkout': typeof AuthenticatedCheckoutRoute
   '/restaurants/$restaurantId': typeof AuthenticatedRestaurantsRestaurantIdRoute
   '/restaurants': typeof AuthenticatedRestaurantsIndexRoute
 }
@@ -76,7 +92,9 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_authenticated/addresses': typeof AuthenticatedAddressesRoute
   '/_authenticated/cart': typeof AuthenticatedCartRoute
+  '/_authenticated/checkout': typeof AuthenticatedCheckoutRoute
   '/_authenticated/restaurants/$restaurantId': typeof AuthenticatedRestaurantsRestaurantIdRoute
   '/_authenticated/restaurants/': typeof AuthenticatedRestaurantsIndexRoute
 }
@@ -86,7 +104,9 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
+    | '/addresses'
     | '/cart'
+    | '/checkout'
     | '/restaurants/$restaurantId'
     | '/restaurants/'
   fileRoutesByTo: FileRoutesByTo
@@ -94,7 +114,9 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
+    | '/addresses'
     | '/cart'
+    | '/checkout'
     | '/restaurants/$restaurantId'
     | '/restaurants'
   id:
@@ -103,7 +125,9 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/login'
     | '/signup'
+    | '/_authenticated/addresses'
     | '/_authenticated/cart'
+    | '/_authenticated/checkout'
     | '/_authenticated/restaurants/$restaurantId'
     | '/_authenticated/restaurants/'
   fileRoutesById: FileRoutesById
@@ -145,11 +169,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/addresses': {
+      id: '/_authenticated/addresses'
+      path: '/addresses'
+      fullPath: '/addresses'
+      preLoaderRoute: typeof AuthenticatedAddressesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/cart': {
       id: '/_authenticated/cart'
       path: '/cart'
       fullPath: '/cart'
       preLoaderRoute: typeof AuthenticatedCartRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/checkout': {
+      id: '/_authenticated/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof AuthenticatedCheckoutRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/restaurants/': {
@@ -170,13 +208,17 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAddressesRoute: typeof AuthenticatedAddressesRoute
   AuthenticatedCartRoute: typeof AuthenticatedCartRoute
+  AuthenticatedCheckoutRoute: typeof AuthenticatedCheckoutRoute
   AuthenticatedRestaurantsRestaurantIdRoute: typeof AuthenticatedRestaurantsRestaurantIdRoute
   AuthenticatedRestaurantsIndexRoute: typeof AuthenticatedRestaurantsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAddressesRoute: AuthenticatedAddressesRoute,
   AuthenticatedCartRoute: AuthenticatedCartRoute,
+  AuthenticatedCheckoutRoute: AuthenticatedCheckoutRoute,
   AuthenticatedRestaurantsRestaurantIdRoute:
     AuthenticatedRestaurantsRestaurantIdRoute,
   AuthenticatedRestaurantsIndexRoute: AuthenticatedRestaurantsIndexRoute,
